@@ -112,8 +112,14 @@ jobs:
 
       - name: build cmake
         run: |
-          cmake --build _build --config ${{ matrix.build_configuration }}
+          cmake --build _build --config ${{ matrix.build_configuration }} --target package
 
       - name: run ctest
         run: |
           ctest --test-dir _build --output-on-failure -C "${{ matrix.build_configuration }}"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AusweisApp-macOS-${{ matrix.os }}
+          path: _build/*.dmg
