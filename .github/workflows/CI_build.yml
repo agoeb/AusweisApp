@@ -108,7 +108,7 @@ jobs:
           export LDFLAGS=-L/usr/local/opt/openssl/lib
           export CPPFLAGS=-I/usr/local/opt/openssl/include
           export PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig/
-          cmake -G "${{ matrix.build_platform }}" -DCMAKE_BUILD_TYPE="${{ matrix.build_configuration }}" -B _build
+          cmake -G "${{ matrix.build_platform }}" -DCMAKE_BUILD_TYPE="${{ matrix.build_configuration }}" -DCMAKE_PREFIX_PATH="$Qt6_DIR" -B _build
 
       - name: build cmake
         run: |
