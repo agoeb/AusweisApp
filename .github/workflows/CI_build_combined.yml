@@ -167,12 +167,18 @@ jobs:
 
       - name: build cmake
         run: |
-          cmake --build ${{ env.BUILD_DIR_APP }} --config ${{ matrix.build_configuration }}
+          cmake --build ${{ env.BUILD_DIR_APP }} --config ${{ matrix.build_configuration }} --target package
           sudo cmake --install ${{ env.BUILD_DIR_APP }}
 
       - name: run ctest
         run: |
           ctest --test-dir ${{ env.BUILD_DIR_APP }} --output-on-failure -C "${{ matrix.build_configuration }}"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AusweisApp-macOS-Combined-${{ matrix.os }}-${{ matrix.build_configuration }}
+          path: ${{ env.BUILD_DIR_APP }}/*.dmg
 
   build_ios:
 
