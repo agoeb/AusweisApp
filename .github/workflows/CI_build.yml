@@ -112,7 +112,8 @@ jobs:
 
       - name: build cmake
         run: |
-          cmake --build _build --config ${{ matrix.build_configuration }} --target package
+          cmake --build _build --config ${{ matrix.build_configuration }}
+          ${{ env.Qt6_DIR }}/bin/macdeployqt _build/src/AusweisApp.app -qmldir=src/ui/qml -always-overwrite -dmg
 
       - name: run ctest
         run: |
@@ -122,4 +123,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AusweisApp-macOS-${{ matrix.os }}
-          path: _build/*.dmg
+          path: _build/src/*.dmg
